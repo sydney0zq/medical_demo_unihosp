@@ -1,0 +1,6 @@
+dicom_data/*
+!dicom_data/.gitkeep
+*.avi
+visual_videos
+.DS_Store
+__pycache__
