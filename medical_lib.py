@@ -3,6 +3,7 @@ import os
 import numpy as np
 import cv2
 from scipy import ndimage
+from skimage.draw import disk
 
 def imgs2vid(imgs, output_fn="test.avi", fps=5, w_index=True):
     imgs = np.asarray(imgs)
@@ -45,6 +46,13 @@ def find_the_deepest_dir(root):
             raise ValueError("The dicom diretory {} should not have more than "
                              "one directory...".format(root))
     return ret_d
+
+def mimic_cylinc_boundary(size=512):
+    circle_mask = np.zeros((size, size), dtype=np.uint8) 
+    rr, cc = disk((size//2, size//2), size//2-2)  # the standard is 256, we use 253
+    circle_mask[rr, cc] = 1
+    circle_mask_inv = 1-circle_mask
+    return circle_mask_inv
 
 
 def load_16bit_dicom_images(path, verbose=True):
@@ -89,7 +97,12 @@ def load_16bit_dicom_images(path, verbose=True):
     image = np.stack([s.pixel_array for s in slices])
     image = image.astype(np.int16)
     # 设置边界外的元素为0
-    image[image == -2000] = 0
+    # image[image <= -2000] = 0
+    # remove the unrelated area
+    circle_mask_inv = mimic_cylinc_boundary(size=512)
+    for i in range(len(image)):
+        image[i] += -2000 * circle_mask_inv
+
     print("the origin dicom min/max is {}/{}".format(np.min(image), np.max(image)))
     # image[image <= HU_keptwin[0]] = HU_keptwin[0]
     # image[image >= HU_keptwin[1]] = HU_keptwin[1]

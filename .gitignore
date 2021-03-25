@@ -4,3 +4,5 @@ dicom_data/*
 visual_videos
 .DS_Store
 __pycache__
+train_data
+*.npy
