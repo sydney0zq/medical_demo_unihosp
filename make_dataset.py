@@ -46,10 +46,11 @@ if __name__ == "__main__":
     covid_1_data = convert_dicom_sample("dicom_data/covid-1")
     normal_1_data = convert_dicom_sample("dicom_data/normal-1")
     os.makedirs("train_data", exist_ok=True)
-    np.save("train_data/covid-1.npy", covid_1_data)
-    np.save("train_data/normal-1.npy", normal_1_data)
+    os.makedirs("train_data/3d", exist_ok=True)
+    np.save("train_data/3d/covid-1.npy", covid_1_data)
+    np.save("train_data/3d/normal-1.npy", normal_1_data)
 
-
+    os.makedirs("train_data/2d", exist_ok=True)
 
 
 
