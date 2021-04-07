@@ -17,7 +17,7 @@ def plot_dualy_sharex(x, ys, xlabel, ylabels, figname=None):
     assert len(x) == len(ys[0]) and len(x) == len(ys[1])
     f, ax1 = plt.subplots(figsize=params["figsize"], dpi=params["dpi"])
     ax2 = ax1.twinx()
-    
+
     # If you want scatter plot
     #ax1.scatter(x, ys[0], c='b', label=ylabels[0],)
     #ax2.scatter(x, ys[1], c='r', label=ylabels[1],)
@@ -63,9 +63,11 @@ class CTDataset(data.Dataset):
 
     def __getitem__(self, index):
         ct_path, ct_label = self.train_list[index]
+        # hdf5 is better than numpy
         ct_imgs = np.load(ct_path)  # ct_imgs.shape: 38x320x416
         
         # !! Do your augmentation here
+        # rotate, contrast
 
         # Normalization to -1~1
         ct_imgs = np.array(ct_imgs, dtype=np.float32)
@@ -80,8 +82,8 @@ class CTDataset(data.Dataset):
         return ct_imgs_th, ct_label_th
 
 #### deep learning network ####
-# from model.baseline_i3d import ENModel
-from naive_model.cls3d import NaiveClsModel as ENModel
+from model.baseline_i3d import ENModel
+# from naive_model.cls3d import NaiveClsModel as ENModel
 
 
 if __name__ == "__main__":
@@ -90,7 +92,7 @@ if __name__ == "__main__":
 
     # hyper-parameters
     model = ENModel()
-    if mode == 'gpu':   
+    if mode == 'gpu':
         model = model.cuda()
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(params=model.parameters(), lr=1e-4,)
@@ -137,7 +139,7 @@ if __name__ == "__main__":
     plot_dualy_sharex([*range(epoch)], ys=[loss_rec, acc_rec], 
                         xlabel="epoch", ylabels=["epoch_loss", "epoch_acc"],
                         figname="train_curve.png")
-    
+
     # validate the network
     with torch.no_grad():
         model.eval()

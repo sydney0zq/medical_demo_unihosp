@@ -53,32 +53,3 @@ if True:
     resized_images = np.stack(resized_images)
     visualize_dicom_as_video(dicom_images=resized_images, output_fn="dicom_resized.avi")
     print("resized dicom images shape: {}".format(resized_images.shape))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

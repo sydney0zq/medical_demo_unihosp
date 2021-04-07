@@ -65,8 +65,8 @@ def load_16bit_dicom_images(path, verbose=True):
     slices = [pydicom.read_file(os.path.join(path, s), force=True) for s in dicom_file_list]
     slices.sort(key=lambda x: float(x.ImagePositionPatient[2]))
 
-    #import pdb
-    #pdb.set_trace()
+    # import pdb
+    # pdb.set_trace()
     total_cnt = len(slices)
     slice_thickness = np.abs(slices[0].ImagePositionPatient[2]-
                              slices[1].ImagePositionPatient[2])
