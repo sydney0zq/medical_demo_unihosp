@@ -140,11 +140,12 @@ def norm_16bit_to_8bit(dicom_16bit_imgs, HU_keptwin=None, bound_values=[0, 1]):
     dicom_8bit_imgs = (dicom_16bit_imgs*255).astype('uint8')
     return dicom_8bit_imgs
 
-def visualize_dicom_as_video(path="", output_fn="", dicom_images=None, fps=5, w_index=True):
+def visualize_dicom_as_video(path="", output_fn="", dicom_images=None, HU_keptwin=None):
     assert output_fn.endswith('avi'), "The output filename must be .avi suffix..."
     if dicom_images is None:
         dicom_images, spacing = load_16bit_dicom_images(path)
-        min_value, max_value = np.min(dicom_images), np.max(dicom_images)
+        min_value, max_value = HU_keptwin
+        dicom_images = np.clip(dicom_images, min_value, max_value)
         norm_images = (dicom_images - min_value) / (max_value - min_value)
         norm_images = np.uint8(norm_images * 255)
     else:

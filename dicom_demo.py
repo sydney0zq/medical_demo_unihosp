@@ -10,17 +10,17 @@ HU_keptwin = np.array([-1250, 250])
 train_spacing = 5
 
 # demo 1: load dicom data and visualize the images
-if False:
+if True:
     visual_dir = "visual_videos"
     os.makedirs(visual_dir, exist_ok=True)
-    visualize_dicom_as_video("dicom_data/covid-1", output_fn=os.path.join(visual_dir, "covid-1.avi"))
-    visualize_dicom_as_video("dicom_data/covid-2", output_fn=os.path.join(visual_dir, "covid-2.avi"))
-    visualize_dicom_as_video("dicom_data/normal-1", output_fn=os.path.join(visual_dir, "normal-1.avi"))
-    visualize_dicom_as_video("dicom_data/normal-2", output_fn=os.path.join(visual_dir, "normal-2.avi"))
+    visualize_dicom_as_video("dicom_data/covid-1", output_fn=os.path.join(visual_dir, "covid-1.avi"), HU_keptwin=HU_keptwin)
+    visualize_dicom_as_video("dicom_data/covid-2", output_fn=os.path.join(visual_dir, "covid-2.avi"), HU_keptwin=HU_keptwin)
+    visualize_dicom_as_video("dicom_data/normal-1", output_fn=os.path.join(visual_dir, "normal-1.avi"), HU_keptwin=HU_keptwin)
+    visualize_dicom_as_video("dicom_data/normal-2", output_fn=os.path.join(visual_dir, "normal-2.avi"), HU_keptwin=HU_keptwin)
 
 # demo 2: normalize the images，from 16bit to 8bit
 # take the sample normal-1 as an example
-if True:
+if False:
     dicom_images, dicom_spacing = load_16bit_dicom_images("dicom_data/covid-1")
     print("dicom images.shape/.dtype {}/{}, dicom_spacing {}".format(dicom_images.shape, dicom_images.dtype, dicom_spacing))
 

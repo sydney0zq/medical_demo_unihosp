@@ -13,6 +13,7 @@ class NaiveClsModel(nn.Module):
         self.conv_layer3 = self._make_conv_layer(16, 32)
         
         self.max_pool = nn.AdaptiveMaxPool3d((2, 1, 1))
+        # self.avg_pool = nn.AdaptiveAvgPool3d((2, 1, 1))
         self.fc = nn.Linear(32*2, num_classes)
 
     def _make_conv_layer(self, in_c, out_c):
