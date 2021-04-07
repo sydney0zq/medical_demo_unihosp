@@ -8,12 +8,12 @@ class NaiveClsModel(nn.Module):
     def __init__(self, num_classes=2):
         super(NaiveClsModel, self).__init__()
 
-        self.conv_layer1 = self._make_conv_layer(1, 32)
-        self.conv_layer2 = self._make_conv_layer(32, 64)
-        self.conv_layer3 = self._make_conv_layer(64, 64)
+        self.conv_layer1 = self._make_conv_layer(1, 8)
+        self.conv_layer2 = self._make_conv_layer(8, 16)
+        self.conv_layer3 = self._make_conv_layer(16, 32)
         
         self.avg_pool = nn.AdaptiveAvgPool3d((2, 1, 1))
-        self.fc = nn.Linear(128*2, num_classes)
+        self.fc = nn.Linear(32*2, num_classes)
 
     def _make_conv_layer(self, in_c, out_c):
         conv_layer = nn.Sequential(
