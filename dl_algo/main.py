@@ -80,7 +80,8 @@ class CTDataset(data.Dataset):
         return ct_imgs_th, ct_label_th
 
 #### deep learning network ####
-from model.baseline_i3d import ENModel
+# from model.baseline_i3d import ENModel
+from naive_model.cls3d import NaiveClsModel as ENModel
 
 
 if __name__ == "__main__":
