@@ -12,7 +12,7 @@ class NaiveClsModel(nn.Module):
         self.conv_layer2 = self._make_conv_layer(8, 16)
         self.conv_layer3 = self._make_conv_layer(16, 32)
         
-        self.avg_pool = nn.AdaptiveAvgPool3d((2, 1, 1))
+        self.max_pool = nn.AdaptiveMaxPool3d((2, 1, 1))
         self.fc = nn.Linear(32*2, num_classes)
 
     def _make_conv_layer(self, in_c, out_c):
@@ -26,14 +26,10 @@ class NaiveClsModel(nn.Module):
         return conv_layer
 
     def forward(self, x):
-        #print(x.size())
         x = self.conv_layer1(x)
-        #print(x.size())
         x = self.conv_layer2(x)
-        #print(x.size())
         x = self.conv_layer3(x)
-        #print(x.size())
-        x = self.avg_pool(x)
+        x = self.max_pool(x)
         x = x.view(x.size(0), -1)
         
         x = self.fc(x)
